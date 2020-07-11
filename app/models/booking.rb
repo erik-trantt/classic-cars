@@ -16,12 +16,10 @@ class Booking < ApplicationRecord
   validate :date_available?, on: :create
 
   def date_available?
-    if car.can_book_for?(start_date, end_date)
-      return true
-    else
-      errors.add(:dates, "Selected dates are not available to book!")
-      return false
-    end
+    return true if car.can_book_for?(start_date, end_date)
+
+    errors.add(:dates, "Selected dates are not available to book!")
+    return false
   end
 
   def approved
@@ -34,5 +32,9 @@ class Booking < ApplicationRecord
 
   def duration
     (end_date - start_date).to_i
+  end
+
+  def formatted_price
+    booking_price.to_s(:rounded, precision: 2, delimiter: ',')
   end
 end

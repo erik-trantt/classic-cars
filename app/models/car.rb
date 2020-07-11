@@ -46,4 +46,8 @@ class Car < ApplicationRecord
   def approved_bookings
     bookings.where(status: Booking::BOOKING_STATUS[:approved])
   end
+
+  def formatted_price
+    price.to_s(:rounded, precision: 2, delimiter: ',')
+  end
 end
