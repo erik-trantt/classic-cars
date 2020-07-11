@@ -30,10 +30,9 @@ class Car < ApplicationRecord
   end
 
   def average_rating
-    my_reviews = reviews
-    return 0 if my_reviews.count.zero?
+    return 0 if reviews.count.zero?
 
-    my_reviews.reduce(0) { |sum, review| sum + review.rating }.fdiv(my_reviews.count).ceil(2)
+    reviews.reduce(0) { |sum, review| sum + review.rating }.fdiv(reviews.count).ceil(2)
   end
 
   def pending_bookings
