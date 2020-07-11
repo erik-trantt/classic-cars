@@ -29,31 +29,29 @@ const addMarkersToMap = (map, markers) => {
 
 const initMapbox = () => {
   const mapElement = document.getElementById('map');
+  // only build a map if there's a div#map to inject into
+  if (!mapElement) { return; }
+  // console.log("mapEl found, generate map Obj");
 
-  if (mapElement) { // only build a map if there's a div#map to inject into
-    mapboxgl.accessToken = mapElement.dataset.mapboxApiKey;
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/light-v10'
-    });
-    const markers = JSON.parse(mapElement.dataset.markers);
-    map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
-                                      mapboxgl: mapboxgl }));
+  mapboxgl.accessToken = mapElement.dataset.mapboxApiKey;
+  const map = new mapboxgl.Map({
+    container: mapElement,
+    style: 'mapbox://styles/mapbox/light-v10',
+    attributionControl: false
+  });
+  // console.log("map Obj generated");
+  // console.log(map);
+  // console.log(mapboxgl);
+  map.addControl( new mapboxgl.AttributionControl(), 'bottom-right');
+  map.addControl( new MapboxGeocoder({ accessToken: mapboxgl.accessToken, mapboxgl: mapboxgl }) );
+  // console.log("added Controls to map Obj");
 
-    
-    if (Object.keys(markers).length > 0) {
-      addMarkersToMap(map, markers);
-      fitMapToMarkers(map, markers);
-      map.flyTo({
-        center: [markers[0].lng, markers[0].lat],
-        zoom: 12,
-        essential: true,
-        padding: 70,
-        duration: 3000,
-        essential: true
-      })
-    }
+  const markers = JSON.parse(mapElement.dataset.markers);
+  if (Object.keys(markers).length > 0) {
+    addMarkersToMap(map, markers);
+    fitMapToMarkers(map, markers);
   }
+  // console.log("added Markers to map Obj");
 };
 
 export { initMapbox };
