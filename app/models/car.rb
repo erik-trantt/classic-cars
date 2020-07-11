@@ -11,10 +11,8 @@ class Car < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_by_name_and_location,
-  against: [ :name, :location ],
-  using: {
-  tsearch: { prefix: true } # <-- now `superman batm` wil
-  }
+                    against: [ :name, :location ],
+                    using: { tsearch: { prefix: true } } # <-- now `superman batm` will work
 
   def search_bookings_by_status(status = [])
     bookings.where(status: status)
@@ -49,7 +47,4 @@ class Car < ApplicationRecord
   def approved_bookings
     bookings.where(status: Booking::BOOKING_STATUS[:approved])
   end
-
-  # include PgSearch::Model
-  # multisearchable against: [:location]
 end
