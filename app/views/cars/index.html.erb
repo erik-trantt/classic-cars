@@ -1,19 +1,21 @@
+<% if @cars.empty? %>
+  <h4 class="mt-5 text-center"> Sorry, your favorite Classy is not here yet </h4>
+  <h4 class="text-center"> Please try another location or model! </h4>
+  <div class="w-100 text-center"><%= link_to "Search again", root_path %></div>
+<% else %>
 <div class="row"> 
-  <div class="cars-list pr-3 col-12 col-md-6">
-    <ul class="list-group list-group-flush">
-      <% if @cars.empty? %>
-        <h4 class="mt-5 text-center"> Sorry, your favorite Classy is not here yet </h4>
-        <h4 class="text-center"> Please try another location or model! </h4>
-        <%= link_to "Search again", root_path, class: "text-center" %>
-      <% else %>
-        <% @cars.each do |car| %>
-          <li class="list-group-item"><%= render 'components/car_card', car: car %></li>
-        <% end %>
-      <% end %>
-    </ul>
-  </div>
-  <div id="map" class="map mapboxgl-map col-12 col-md-6 d-none d-md-inline"
-       data-markers="<%= @markers.to_json %>"
-       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
-  </div> 
+    <div class="cars-list pr-3 col-12 col-md-6">
+      <ul class="list-group list-group-flush">
+          <% @cars.each do |car| %>
+            <li class="list-group-item"><%= render "components/car_card", car: car %></li>
+          <% end %>
+      </ul>
+    </div>
+    <div class="col-12 col-md-6 d-none d-md-inline">
+      <div id="map" 
+          data-markers="<%= @markers.to_json %>"
+          data-mapbox-api-key="<%= ENV["MAPBOX_API_KEY"] %>">
+      </div> 
+    </div>
 </div>
+<% end %>
