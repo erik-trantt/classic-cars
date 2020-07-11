@@ -26,7 +26,7 @@ class CarsController < ApplicationController
   end
 
   def index
-    @cars = params[:query].present? ? cars_by_query(params[:query]) : Car.geocoded
+    @cars = handle_user_car_query(params[:query])
 
     @markers = @cars.map do |car|
       prepare_car_marker(car)
@@ -62,6 +62,12 @@ class CarsController < ApplicationController
 
   def car_params
     params.require(:car).permit(:name, :location, :seats, :year, :price, photos: [])
+  end
+
+  def handle_user_car_query(query)
+    cars = cars_by_query(query) if query.present?
+    cars ||= Car.geocoded
+    cars.with_attached_photos
   end
 
   def cars_by_query(query)

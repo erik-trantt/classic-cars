@@ -8,7 +8,7 @@
   <div class="card-header d-flex justify-content-between flex-column flex-md-row">
     <div class="flex-grow-1 py-2">
       <h2 class="mb-2"><%= link_to car.name, car_path(car) %></h2>
-      <h6 class="mb-2 card-subtitle font-weight-bold">AUD <%= car.price %></h6>
+      <h6 class="mb-2 card-subtitle font-weight-bold">AUD <%= format_price(car.price) %></h6>
       <h6 class="mb-2 card-subtitle text-muted"><%= car.location %></h6>
       <h6 class="mb-2"><%= rating_as_stars(car.average_rating) %> (<%= car.average_rating %>)</h6>
     </div>

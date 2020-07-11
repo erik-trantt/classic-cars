@@ -11,10 +11,8 @@ class Car < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_by_name_and_location,
-  against: [ :name, :location ],
-  using: {
-  tsearch: { prefix: true } # <-- now `superman batm` wil
-  }
+                    against: [ :name, :location ],
+                    using: { tsearch: { prefix: true } } # <-- now `superman batm` will work
 
   def search_bookings_by_status(status = [])
     bookings.where(status: status)
@@ -32,10 +30,9 @@ class Car < ApplicationRecord
   end
 
   def average_rating
-    my_reviews = reviews
-    return 0 if my_reviews.count.zero?
+    return 0 if reviews.count.zero?
 
-    my_reviews.reduce(0) { |sum, review| sum + review.rating }.fdiv(my_reviews.count).ceil(2)
+    reviews.reduce(0) { |sum, review| sum + review.rating }.fdiv(reviews.count).ceil(2)
   end
 
   def pending_bookings
@@ -50,6 +47,7 @@ class Car < ApplicationRecord
     bookings.where(status: Booking::BOOKING_STATUS[:approved])
   end
 
-  # include PgSearch::Model
-  # multisearchable against: [:location]
+  def formatted_price
+    price.to_s(:rounded, precision: 2, delimiter: ',')
+  end
 end

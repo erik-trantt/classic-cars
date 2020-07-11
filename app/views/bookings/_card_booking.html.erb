@@ -16,7 +16,7 @@
       </div>
       <div class="card-text mt-2 mb-1"><%= formatted_date(booking.start_date) %></div>
       <div class="card-text mb-1"><%= formatted_date(booking.end_date) %></div>
-      <div class="card-text mb-1">AUD <%= booking.booking_price %></div>
+      <div class="card-text mb-1">AUD <%= format_price(booking.booking_price) %></div>
       <div class="card-text text-muted mb-1"><%= booking.status %></div>
     </div>
   </div>

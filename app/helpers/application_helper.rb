@@ -33,4 +33,8 @@ module ApplicationHelper
 
     stylesheet_link_tag 'map', media: 'all', 'data-turbolinks-track': 'reload'
   end
+
+  def format_price(price)
+    price.to_s(:rounded, precision: 2, delimiter: ',')
+  end
 end
