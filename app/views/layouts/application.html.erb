@@ -6,22 +6,19 @@
     <%= csp_meta_tag %>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
   </head>
 
   <body>
     <%= render 'shared/navbar' %>
-    <% if current_page? root_path %>
-      <div class='banner'>
-    <% else %>
-      <div class="container">
-    <% end %>
+    <%# check if it is homepage, yes -> give 'banner' class, no -> give 'container' class  %>
+    <% css_class = (current_page? root_path) ? 'banner' : 'container' %>
+    <div class='<%= css_class %>' >
+      <%= handle_missing_mapbox_gl_css %>
       <%= yield %>
-      <%= render 'shared/flashes' %>
-
     </div>
+    <%= render 'shared/flashes' %>
   </body>
 </html>

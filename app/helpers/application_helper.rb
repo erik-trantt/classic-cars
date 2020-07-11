@@ -24,4 +24,13 @@ module ApplicationHelper
 
     Nokogiri::HTML.parse(stars.join).to_html.html_safe
   end
+
+  def handle_missing_mapbox_gl_css
+    # if request.path is cars#index or cars#show path, then load the map.scss
+    mapbox_require_pattern = %r{/cars(/?[0-9]*)?}
+    puts "mapbox should be displayed, #{request.path.match(mapbox_require_pattern)}"
+    return unless request.path.match(mapbox_require_pattern)
+
+    stylesheet_link_tag 'map', media: 'all', 'data-turbolinks-track': 'reload'
+  end
 end

@@ -1,0 +1,8 @@
+// This stylesheet only responds to pages with map
+// External libraries
+@import 'mapbox-gl/dist/mapbox-gl';
+@import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder';
+@import url('https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css');
+
+// Your CSS partials
+@import 'components/map';

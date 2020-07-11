@@ -5,10 +5,11 @@
     border: none;
   }
 }
+
 #map {
   position: sticky;
+  background-color: grey;
   top: 0;
   height: 100vh;
-  background-color: grey;
   width: 100%; 
 }
